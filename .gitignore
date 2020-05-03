@@ -1,0 +1,8 @@
+# MongoDB container volume
+db
+
+# pyenv
+.python-version
+
+# Jupyer checkpoints
+.ipynb_checkpoints
