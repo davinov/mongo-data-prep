@@ -1,0 +1,3 @@
+OTHER_STUFF:
+    []
+MONGO_PIPELINE: [{'output_domain': 'purple', 'query': [{'$match': {'domain': 'test_data', 'color': 'purple', 'number': {'$lte': 50}}}]}, {'output_domain': 'red', 'query': {'$match': {'domain': 'test_data', 'color': 'red', 'number': {'$gt': 50}}}}, {'output_domain': 'result', 'query': [{'$match': {'domain': 'purple', 'color': 'purple'}}, {'$group': {'_id': None, '_vqbPipelineInline': {'$push': '$$ROOT'}}}, {'$lookup': {'from': 'red', 'pipeline': [{'$match': {}}, {'$project': {'_id': 0}}], 'as': '_vqbPipelineToAppend_0'}}, {'$project': {'_vqbPipelinesUnion': {'$concatArrays': ['$_vqbPipelineInline', '$_vqbPipelineToAppend_0']}}}, {'$unwind': '$_vqbPipelinesUnion'}, {'$replaceRoot': {'newRoot': '$_vqbPipelinesUnion'}}]}]
